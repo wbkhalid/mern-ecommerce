@@ -2,9 +2,12 @@ import React from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { Button, TextField, Typography, Container, Box } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { loginUser } from '../_api/user';
 
 const Login = () => {
+    const navigate = useNavigate();
+
     const formik = useFormik({
         initialValues: {
             email: '',
@@ -14,16 +17,21 @@ const Login = () => {
             email: Yup.string().email('Invalid email address').required('Required'),
             password: Yup.string().min(6, 'Password must be at least 6 characters').required('Required'),
         }),
-        onSubmit: (values) => {
-            // Handle login logic here
-            console.log('Login:', values);
+        onSubmit: async (values) => {
+            try {
+                const data = await loginUser(values);
+                localStorage.setItem('token', data.token); 
+                navigate('/');
+            } catch (error) {
+                console.error('Login failed:', error);
+            }
         },
     });
 
     return (
         <Container maxWidth="sm">
-            <Box sx={{ mt: 5 }} minHeight='95vh'> 
-            <Typography variant="h4" textAlign='center' fontWeight='bold' gutterBottom>
+            <Box sx={{ mt: 5 }} minHeight='95vh'>
+                <Typography variant="h4" textAlign='center' fontWeight='bold' gutterBottom>
                     Login
                 </Typography>
                 <form onSubmit={formik.handleSubmit}>
