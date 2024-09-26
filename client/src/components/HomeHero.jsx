@@ -18,6 +18,7 @@ const HomeHero = () => {
                     <img src="/images/hero.jpg" alt="" style={{
                         width: '80%',
                         height: 'auto',
+                        borderRadius: '.5rem'
                     }} />
                 </Box>
             </Grid>

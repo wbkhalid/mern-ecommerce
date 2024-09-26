@@ -39,6 +39,7 @@ const Home = ({ allProducts }) => {
 
             {/* Filter Section */}
             <Card sx={{ borderRadius: '1rem', boxShadow: 'none', p: 2 }}>
+                <Typography variant='h5' fontWeight='bold' textAlign='center' gutterBottom>Filter Products</Typography>
                 <Grid container gap={2} justifyContent="center">
                     {/* Category Filter */}
                     <Grid item xs={12} sm={3.8}>
@@ -94,7 +95,7 @@ const Home = ({ allProducts }) => {
                     </Grid>
 
                     {/* Clear Filters Button */}
-                    <Grid item xs={12} sm={4}>
+                    <Grid item xs={12} sm={4} display='flex' justifyContent='center'>
                         <Button variant="outlined" onClick={handleClearFilters}>
                             Clear Filters
                         </Button>

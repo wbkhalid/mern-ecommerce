@@ -9,9 +9,10 @@ const AddProduct = () => {
     const initialValues = {
         name: '',
         price: '',
-        image: null, // Changed from imageUrl to image file
+        image: null,
         category: '',
         rating: '',
+        description: '',
     };
 
     const validationSchema = Yup.object({
@@ -25,6 +26,9 @@ const AddProduct = () => {
             .required('Rating is required')
             .min(0, 'Rating cannot be less than 0')
             .max(5, 'Rating cannot exceed 5'),
+        description: Yup.string()
+            .required('Description is required')
+            .min(10, 'Description should be at least 10 characters long'), // New validation
     });
 
     const handleImageChange = (event, setFieldValue) => {
@@ -43,9 +47,8 @@ const AddProduct = () => {
 
     const onSubmit = (values, { resetForm }) => {
         console.log('Form Data', values);
-        // Here you would typically handle file upload (e.g., send the file to an API)
-        resetForm(); // Reset the form after submission
-        setImagePreview(null); // Clear the image preview
+        resetForm();
+        setImagePreview(null);
     };
 
     return (
@@ -93,8 +96,6 @@ const AddProduct = () => {
                                 />
                             </Box>
 
-
-
                             {/* Category */}
                             <Box mb={2}>
                                 <TextField
@@ -130,6 +131,24 @@ const AddProduct = () => {
                                     onBlur={handleBlur}
                                     error={touched.rating && Boolean(errors.rating)}
                                     helperText={touched.rating && errors.rating}
+                                />
+                            </Box>
+
+                            {/* Description */}
+                            <Box mb={2}>
+                                <TextField
+                                    fullWidth
+                                    id="description"
+                                    name="description"
+                                    label="Description"
+                                    variant="outlined"
+                                    multiline
+                                    minRows={4}
+                                    value={values.description}
+                                    onChange={handleChange}
+                                    onBlur={handleBlur}
+                                    error={touched.description && Boolean(errors.description)}
+                                    helperText={touched.description && errors.description}
                                 />
                             </Box>
 

@@ -1,9 +1,9 @@
-import { Card, CardMedia, CardContent, CardActions, Button, Typography, Box } from '@mui/material';
+import { Card, CardMedia, CardContent, CardActions, Button, Typography, Box, Rating } from '@mui/material';
 import { useCart } from '../context/CartContext';
+import { Link } from 'react-router-dom';
 
 const ProductCard = ({ product }) => {
     const { addToCart, decrementFromCart, getQuantity } = useCart();
-
     const quantity = getQuantity(product._id);
 
     return (
@@ -11,19 +11,22 @@ const ProductCard = ({ product }) => {
             <CardMedia
                 component="img"
                 height="200"
-                image={product.imageUrl}
-                alt={product.name}
+                image={product?.imageUrl}
+                alt={product?.name}
             />
             <CardContent>
                 <Typography gutterBottom variant="h6" fontWeight='bold'>
-                    {product.name}
+                    {product?.name}
                 </Typography>
                 <Typography variant="body2" color="textSecondary">
-                    <b>Price:</b> ${product.price}
+                    <b>Price:</b> ${product?.price}
                 </Typography>
-                <Typography variant="body2" color="textSecondary">
-                    <b>Rating:</b> {product.rating} / 5
-                </Typography>
+                <Box display='flex' alignItems='center' gap={.2}>
+                    <Typography variant="body2" color="textSecondary" fontWeight='bold'>
+                        Rating:
+                    </Typography>
+                    <Rating name="read-only" value={product?.rating} readOnly precision={0.1} />
+                </Box>
 
                 <Box display='flex' gap={1} alignItems='center' mt='1rem'>
                     <Box onClick={() => decrementFromCart(product)} sx={{ ...buttonStyle }}>−</Box>
@@ -32,6 +35,10 @@ const ProductCard = ({ product }) => {
                     </Box>
                     <Box onClick={() => addToCart(product)} sx={{ ...buttonStyle }}>+</Box>
                 </Box>
+
+                <Button component={Link} to={`/product/${product?._id}`} variant='contained' fullWidth sx={{ mt: '1rem' }}>
+                    View Details
+                </Button>
             </CardContent>
 
 
